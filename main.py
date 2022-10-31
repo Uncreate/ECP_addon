@@ -18,7 +18,7 @@ style.map('Treeview',
     background=[('selected', "#347083")])
 
 tree_frame = Frame(root)
-tree_frame.pack(pady=(10,0))
+tree_frame.pack(pady=20, padx=10)
 
 
 tree_scroll = Scrollbar(tree_frame)
@@ -471,7 +471,78 @@ Q_label.grid (row=18, column=4)
 R_label = Label(data_frame, text="HSK63-SM75-3.0")
 R_label.grid (row=19, column=4)
 
-
+# Remove Single Tool
+def delete_tool():
+    x = my_tree.selection()[0]
+    my_tree.delete(x)
+# Remove Multiple Tool
+def remove_many():
+    x = my_tree.selection()
+    for record in x:
+        my_tree.delete(record)
+# Clear all entries
+def clear():
+    # Clear the form
+    Ignore.delete(0, END),
+    SoflexRule.delete(0, END),
+    MillRule.delete(0, END),
+    DrillRule.delete(0, END),
+    Seq.delete(0, END),
+    Crib_FR.delete(0, END),
+    Crib_AZ.delete(0, END),
+    Type.delete(0, END),
+    EssaiPartNumber.delete(0, END),
+    EDPNum.delete(0,END),
+    Description.delete(0,END),
+    ThreadDescription11.delete(0,END),
+    Diameter.delete(0,END),
+    ShankDiameter.delete(0,END),
+    ShoulderDiameter.delete(0,END),
+    ShoulderLength.delete(0,END),
+    ShoulderLenEnd.delete(0,END),
+    ShoulderAngle.delete(0,END),
+    MinOHL.delete(0,END),
+    NumFlutes.delete(0,END),
+    OAL.delete(0,END),
+    LOC.delete(0,END),
+    CornerRadius.delete(0,END),
+    ThreadPitch.delete(0,END),
+    ThreadClass.delete(0,END),
+    TipAngle.delete(0,END),
+    TipHeight.delete(0,END),
+    TipDiameter.delete(0,END),
+    ChamferLength.delete(0,END),
+    Startshoulderlength.delete(0,END),
+    ToolMaterial.delete(0,END),
+    COATING.delete(0,END),
+    Manufacturer.delete(0,END),
+    NOTE.delete(0,END),
+    AL.delete(0, END),
+    S1.delete(0, END),
+    CU.delete(0, END),
+    PL.delete(0, END),
+    PG.delete(0, END),
+    ROUGH.delete(0,END),
+    FIN.delete(0,END),
+    ShapeName.delete(0,END),
+    A.delete(0, END),
+    B.delete(0, END),
+    C.delete(0, END),
+    D.delete(0, END),
+    E.delete(0, END),
+    F.delete(0, END),
+    G.delete(0, END),
+    H.delete(0, END),
+    I.delete(0, END),
+    J.delete(0, END),
+    K.delete(0, END),
+    L.delete(0, END),
+    M.delete(0, END),
+    N.delete(0, END),
+    O.delete(0, END),
+    P.delete(0, END),
+    Q.delete(0, END),
+    R.delete(0, END)
 # Select Record
 def select_record(e):
     # Clear the form
@@ -534,7 +605,7 @@ def select_record(e):
     O.delete(0, END),
     P.delete(0, END),
     Q.delete(0, END),
-    R.delete(0, END),
+    R.delete(0, END)
     # Get Record Number
     selected = my_tree.focus()
     # Get Record Values
@@ -600,7 +671,130 @@ def select_record(e):
     P.insert(0, values[57])
     Q.insert(0, values[58])
     R.insert(0, values[59])
-    
+# Update Tool
+def update_tool():
+    selected = my_tree.focus()
+    my_tree.item(selected, text="", values=(Ignore.get(),
+        SoflexRule.get(),
+        MillRule.get(),
+        DrillRule.get(),
+        Seq.get(),
+        Crib_FR.get(),
+        Crib_AZ.get(),
+        Type.get(),
+        EssaiPartNumber.get(),
+        EDPNum.get(),
+        Description.get(),
+        ThreadDescription11.get(),
+        Diameter.get(),
+        ShankDiameter.get(),
+        ShoulderDiameter.get(),
+        ShoulderLength.get(),
+        ShoulderLenEnd.get(),
+        ShoulderAngle.get(),
+        MinOHL.get(),
+        NumFlutes.get(),
+        OAL.get(),
+        LOC.get(),
+        CornerRadius.get(),
+        ThreadPitch.get(),
+        ThreadClass.get(),
+        TipAngle.get(),
+        TipHeight.get(),
+        TipDiameter.get(),
+        ChamferLength.get(),
+        Startshoulderlength.get(),
+        ToolMaterial.get(),
+        COATING.get(),
+        Manufacturer.get(),
+        NOTE.get(),
+        AL.get(),
+        S1.get(),
+        CU.get(),
+        PL.get(),
+        PG.get(),
+        ROUGH.get(),
+        FIN.get(),
+        ShapeName.get(),
+        A.get(),
+        B.get(),
+        C.get(),
+        D.get(),
+        E.get(),
+        F.get(),
+        G.get(),
+        H.get(),
+        I.get(),
+        J.get(),
+        K.get(),
+        L.get(),
+        M.get(),
+        N.get(),
+        O.get(),
+        P.get(),
+        Q.get(),
+        R.get(),))
+    # Clear the form
+    Ignore.delete(0, END),
+    SoflexRule.delete(0, END),
+    MillRule.delete(0, END),
+    DrillRule.delete(0, END),
+    Seq.delete(0, END),
+    Crib_FR.delete(0, END),
+    Crib_AZ.delete(0, END),
+    Type.delete(0, END),
+    EssaiPartNumber.delete(0, END),
+    EDPNum.delete(0,END),
+    Description.delete(0,END),
+    ThreadDescription11.delete(0,END),
+    Diameter.delete(0,END),
+    ShankDiameter.delete(0,END),
+    ShoulderDiameter.delete(0,END),
+    ShoulderLength.delete(0,END),
+    ShoulderLenEnd.delete(0,END),
+    ShoulderAngle.delete(0,END),
+    MinOHL.delete(0,END),
+    NumFlutes.delete(0,END),
+    OAL.delete(0,END),
+    LOC.delete(0,END),
+    CornerRadius.delete(0,END),
+    ThreadPitch.delete(0,END),
+    ThreadClass.delete(0,END),
+    TipAngle.delete(0,END),
+    TipHeight.delete(0,END),
+    TipDiameter.delete(0,END),
+    ChamferLength.delete(0,END),
+    Startshoulderlength.delete(0,END),
+    ToolMaterial.delete(0,END),
+    COATING.delete(0,END),
+    Manufacturer.delete(0,END),
+    NOTE.delete(0,END),
+    AL.delete(0, END),
+    S1.delete(0, END),
+    CU.delete(0, END),
+    PL.delete(0, END),
+    PG.delete(0, END),
+    ROUGH.delete(0,END),
+    FIN.delete(0,END),
+    ShapeName.delete(0,END),
+    A.delete(0, END),
+    B.delete(0, END),
+    C.delete(0, END),
+    D.delete(0, END),
+    E.delete(0, END),
+    F.delete(0, END),
+    G.delete(0, END),
+    H.delete(0, END),
+    I.delete(0, END),
+    J.delete(0, END),
+    K.delete(0, END),
+    L.delete(0, END),
+    M.delete(0, END),
+    N.delete(0, END),
+    O.delete(0, END),
+    P.delete(0, END),
+    Q.delete(0, END),
+    R.delete(0, END)
     
 button_frame = LabelFrame(root, text="Commands")
 button_frame.pack(fill="x", expand="yes", padx=20)
@@ -608,16 +802,16 @@ button_frame.pack(fill="x", expand="yes", padx=20)
 add_button = Button(button_frame, text="Add Tool")
 add_button.grid(row=0, column=0, padx=10, pady=10)
 
-update_button = Button(button_frame, text="Update Tool")
+update_button = Button(button_frame, text="Update Tool", command=update_tool)
 update_button.grid(row=0, column=1, padx=10, pady=10)
 
-delete_button = Button(button_frame, text="Remove Tool")
+delete_button = Button(button_frame, text="Remove Tool", command=delete_tool)
 delete_button.grid(row=0, column=2, padx=10, pady=10)
 
-remove_many_button = Button(button_frame, text="Remove Selected Tools")
+remove_many_button = Button(button_frame, text="Remove Selected Tools", command=remove_many)
 remove_many_button.grid(row=0, column=3, padx=10, pady=10)
 
-select_button = Button(button_frame, text="Select Tool", command=select_record)
+select_button = Button(button_frame, text="Clear Form", command=clear)
 select_button.grid(row=0, column=4, padx=10, pady=10)
 
 
