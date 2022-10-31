@@ -473,7 +473,7 @@ R_label.grid (row=19, column=4)
 
 
 # Select Record
-def select_record():
+def select_record(e):
     # Clear the form
     Ignore.delete(0, END),
     SoflexRule.delete(0, END),
@@ -620,4 +620,6 @@ remove_many_button.grid(row=0, column=3, padx=10, pady=10)
 select_button = Button(button_frame, text="Select Tool", command=select_record)
 select_button.grid(row=0, column=4, padx=10, pady=10)
 
+
+my_tree.bind("<ButtonRelease-1>", select_record)
 root.mainloop()
