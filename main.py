@@ -21,16 +21,16 @@ def query_database():
     conn = sqlite3.connect('data/tools.db')
     # DB Cursor
     c = conn.cursor()
-    c.execute("SELECT * FROM tools")
+    c.execute("SELECT rowid,* FROM tools")
     records = c.fetchall()
     global count
     count = 0
-
+    
     for record in records:
         if count % 2 ==0:
-            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],	record[1],	record[2],	record[3],	record[4],	record[5],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59]), tags=('evenrow',))
+            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[1],	record[2],	record[3],	record[4],	record[0],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59],	record[60]), tags=('evenrow',))
         else:
-            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],	record[1],	record[2],	record[3],	record[4],	record[5],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59]), tags=('oddrow',))
+            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[1],	record[2],	record[3],	record[4],	record[0],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59],	record[60]), tags=('oddrow',))
         count +=1
         
 style = ttk.Style()
