@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import sqlite3
 import pandas as pd
 
@@ -519,11 +520,37 @@ R.grid(row=13, column=7)
 def delete_tool():
     x = my_tree.selection()[0]
     my_tree.delete(x)
+    conn = sqlite3.connect('data/tools.db')
+    c = conn.cursor()
+    
+    c.execute("DELETE FROM tools WHERE oid=" + Seq.get())
+    clear()
+    
+    conn.commit()
+    conn.close()
+    my_tree.delete(*my_tree.get_children())
+    query_database()
 # Remove Multiple Tool
 def remove_many():
-    x = my_tree.selection()
-    for record in x:
-        my_tree.delete(record)
+    response = messagebox.askyesno("WOAH!!!!", "This Will Delete EVERYTHING SELECTED From The Table\nAre You Sure?!")
+    if response == 1:
+        x = my_tree.selection()
+        seqToDelete = []
+        for record in x:
+            seqToDelete.append(my_tree.item(record, 'values')[4])
+        for record in x:
+            my_tree.delete(record)
+            
+        conn = sqlite3.connect('data/tools.db')
+        c = conn.cursor()
+        c.executemany("DELETE FROM tools WHERE oid = ?", [(a,) for a in seqToDelete])
+        
+        seqToDelete = [] 
+        conn.commit()
+        conn.close()
+        clear()
+        my_tree.delete(*my_tree.get_children())
+        query_database()
 # Clear all entries
 def clear():
     # Clear the form
