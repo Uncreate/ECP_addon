@@ -778,6 +778,145 @@ def update_tool():
         P.get(),
         Q.get(),
         R.get(),))
+    
+    
+    
+    # Create or Connect to database
+    conn = sqlite3.connect('data/tools.db')
+    # DB Cursor
+    c = conn.cursor()
+    
+    c.execute("""UPDATE tools SET
+        Ignore = :Ignore,
+        SoflexRule = :SoflexRule,
+        MillRule = :MillRule,
+        DrillRule = :DrillRule,
+        Crib_FR = :Crib_FR,
+        Crib_AZ = :Crib_AZ,
+        Type = :Type,
+        EssaiPartNum = :EssaiPartNum,
+        EDPNum = :EDPNum,
+        Description = :Description,
+        ThreadDescription11 = :ThreadDescription11,
+        Diameter = :Diameter,
+        ShankDiameter = :ShankDiameter,
+        ShoulderDiameter = :ShoulderDiameter,
+        ShoulderLength = :ShoulderLength,
+        ShoulderLenEnd = :ShoulderLenEnd,
+        ShoulderAngle = :ShoulderAngle,
+        MinOHL = :MinOHL,
+        NumFlutes = :NumFlutes,
+        OAL = :OAL,
+        LOC = :LOC,
+        CornerRadius = :CornerRadius,
+        ThreadPitch = :ThreadPitch,
+        ThreadClass = :ThreadClass,
+        TipAngle = :TipAngle,
+        TipHeight = :TipHeight,
+        TipDiameter = :TipDiameter,
+        ChamferLength = :ChamferLength,
+        Startshoulderlength = :Startshoulderlength,
+        ToolMaterial = :ToolMaterial,
+        COATING = :COATING,
+        Manufacturer = :Manufacturer,
+        NOTE = :NOTE,
+        AL = :AL,
+        S1 = :S1,
+        CU = :CU,
+        PL = :PL,
+        PG = :PG,
+        ROUGH = :ROUGH,
+        FIN = :FIN,
+        ShapeName = :ShapeName,
+        A = :A,
+        B = :B,
+        C = :C,
+        D = :D,
+        E = :E,
+        F = :F,
+        G = :G,
+        H = :H,
+        I = :I,
+        J = :J,
+        K = :K,
+        L = :L,
+        M = :M,
+        N = :N,
+        O = :O,
+        P = :P,
+        Q = :Q,
+        R = :R
+        
+        WHERE oid = :oid""",
+        {
+            'Ignore':Ignore.get(),
+            'SoflexRule':SoflexRule.get(),
+            'MillRule':MillRule.get(),
+            'DrillRule':DrillRule.get(),
+            'Crib_FR':Crib_FR.get(),
+            'Crib_AZ':Crib_AZ.get(),
+            'Type':Type.get(),
+            'EssaiPartNum':EssaiPartNumber.get(),
+            'EDPNum':EDPNum.get(),
+            'Description':Description.get(),
+            'ThreadDescription11':ThreadDescription11.get(),
+            'Diameter':Diameter.get(),
+            'ShankDiameter':ShankDiameter.get(),
+            'ShoulderDiameter':ShoulderDiameter.get(),
+            'ShoulderLength':ShoulderLength.get(),
+            'ShoulderLenEnd':ShoulderLenEnd.get(),
+            'ShoulderAngle':ShoulderAngle.get(),
+            'MinOHL':MinOHL.get(),
+            'NumFlutes':NumFlutes.get(),
+            'OAL':OAL.get(),
+            'LOC':LOC.get(),
+            'CornerRadius':CornerRadius.get(),
+            'ThreadPitch':ThreadPitch.get(),
+            'ThreadClass':ThreadClass.get(),
+            'TipAngle':TipAngle.get(),
+            'TipHeight':TipHeight.get(),
+            'TipDiameter':TipDiameter.get(),
+            'ChamferLength':ChamferLength.get(),
+            'Startshoulderlength':Startshoulderlength.get(),
+            'ToolMaterial':ToolMaterial.get(),
+            'COATING':COATING.get(),
+            'Manufacturer':Manufacturer.get(),
+            'NOTE':NOTE.get(),
+            'AL':AL.get(),
+            'S1':S1.get(),
+            'CU':CU.get(),
+            'PL':PL.get(),
+            'PG':PG.get(),
+            'ROUGH':ROUGH.get(),
+            'FIN':FIN.get(),
+            'ShapeName':ShapeName.get(),
+            'A':A.get(),
+            'B':B.get(),
+            'C':C.get(),
+            'D':D.get(),
+            'E':E.get(),
+            'F':F.get(),
+            'G':G.get(),
+            'H':H.get(),
+            'I':I.get(),
+            'J':J.get(),
+            'K':K.get(),
+            'L':L.get(),
+            'M':M.get(),
+            'N':N.get(),
+            'O':O.get(),
+            'P':P.get(),
+            'Q':Q.get(),
+            'R':R.get(),
+            'oid':Seq.get()
+        })
+ 
+    
+    conn.commit()
+    conn.close()
+    
+    
+    
     # Clear the form
     Ignore.delete(0, END),
     SoflexRule.delete(0, END),
@@ -839,11 +978,96 @@ def update_tool():
     P.delete(0, END),
     Q.delete(0, END),
     R.delete(0, END)
+# Add a new Tool
+def add_tool():
+    # create the database
+        conn = sqlite3.connect('data/tools.db')
+        # Create Cursor
+        c = conn.cursor()
+
+        #insert to table
+        c.execute("INSERT INTO tools VALUES(:Ignore,:SoflexRule,:MillRule,:DrillRule, :Seq, :Crib_FR,:Crib_AZ,:Type,:EssaiPartNum,:EDPNum,:Description,:ThreadDescription11,:Diameter,:ShankDiameter,:ShoulderDiameter, :ShoulderLength, :ShoulderLenEnd, :ShoulderAngle, :MinOHL, :NumFlutes, :OAL, :LOC, :CornerRadius, :ThreadPitch, :ThreadClass, :TipAngle, :TipHeight, :TipDiameter, :ChamferLength, :Startshoulderlength, :ToolMaterial, :COATING, :Manufacturer, :NOTE, :AL, :S1, :CU, :PL, :PG, :ROUGH, :FIN, :ShapeName, :A, :B, :C, :D, :E, :F, :G, :H, :I, :J, :K, :L, :M, :N, :O, :P, :Q, :R)",
+                {
+                    'Ignore':Ignore.get(),
+                    'SoflexRule':SoflexRule.get(),
+                    'MillRule':MillRule.get(),
+                    'DrillRule':DrillRule.get(),
+                    'Seq':Seq.get(),
+                    'Crib_FR':Crib_FR.get(),
+                    'Crib_AZ':Crib_AZ.get(),
+                    'Type':Type.get(),
+                    'EssaiPartNum':EssaiPartNumber.get(),
+                    'EDPNum':EDPNum.get(),
+                    'Description':Description.get(),
+                    'ThreadDescription11':ThreadDescription11.get(),
+                    'Diameter':Diameter.get(),
+                    'ShankDiameter':ShankDiameter.get(),
+                    'ShoulderDiameter':ShoulderDiameter.get(),
+                    'ShoulderLength':ShoulderLength.get(),
+                    'ShoulderLenEnd':ShoulderLenEnd.get(),
+                    'ShoulderAngle':ShoulderAngle.get(),
+                    'MinOHL':MinOHL.get(),
+                    'NumFlutes':NumFlutes.get(),
+                    'OAL':OAL.get(),
+                    'LOC':LOC.get(),
+                    'CornerRadius':CornerRadius.get(),
+                    'ThreadPitch':ThreadPitch.get(),
+                    'ThreadClass':ThreadClass.get(),
+                    'TipAngle':TipAngle.get(),
+                    'TipHeight':TipHeight.get(),
+                    'TipDiameter':TipDiameter.get(),
+                    'ChamferLength':ChamferLength.get(),
+                    'Startshoulderlength':Startshoulderlength.get(),
+                    'ToolMaterial':ToolMaterial.get(),
+                    'COATING':COATING.get(),
+                    'Manufacturer':Manufacturer.get(),
+                    'NOTE':NOTE.get(),
+                    'AL':AL.get(),
+                    'S1':S1.get(),
+                    'CU':CU.get(),
+                    'PL':PL.get(),
+                    'PG':PG.get(),
+                    'ROUGH':ROUGH.get(),
+                    'FIN':FIN.get(),
+                    'ShapeName':ShapeName.get(),
+                    'A':A.get(),
+                    'B':B.get(),
+                    'C':C.get(),
+                    'D':D.get(),
+                    'E':E.get(),
+                    'F':F.get(),
+                    'G':G.get(),
+                    'H':H.get(),
+                    'I':I.get(),
+                    'J':J.get(),
+                    'K':K.get(),
+                    'L':L.get(),
+                    'M':M.get(),
+                    'N':N.get(),
+                    'O':O.get(),
+                    'P':P.get(),
+                    'Q':Q.get(),
+                    'R':R.get(),
+                    
+                })
+
+               
+               
+     
+
+        # Commit Changes
+        conn.commit()
+        # Close connection
+        conn.close()
+        clear()
+        # Update Treeview with new tools
+        my_tree.delete(*my_tree.get_children())
+        query_database()
     
 button_frame = LabelFrame(root, text="Commands")
 button_frame.pack(fill="x", expand="yes", padx=20)
 
-add_button = Button(button_frame, text="Add Tool")
+add_button = Button(button_frame, text="Add Tool", command=add_tool)
 add_button.grid(row=0, column=0, padx=10, pady=10)
 
 update_button = Button(button_frame, text="Update Tool", command=update_tool)
@@ -860,7 +1084,7 @@ select_button.grid(row=0, column=4, padx=10, pady=10)
 
 
 my_tree.bind("<ButtonRelease-1>", select_record)
-BOM() #run once!
+# BOM() #run once!
 query_database()
 
 root.mainloop()
