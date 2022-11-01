@@ -1,11 +1,38 @@
 from tkinter import *
 from tkinter import ttk
-
+import sqlite3
+import pandas as pd
 
 root = Tk()
 root.title("ECP Addon")
 root.geometry('1200x900+50+50')
 
+
+
+def BOM():
+    cxn = sqlite3.connect('data/tools.db')
+    wb = pd.read_excel('data/BOM.xlsx',sheet_name = 'Tools', keep_default_na=False)
+    wb.to_sql(name='tools',con=cxn,if_exists='replace',index=False)
+    cxn.commit()
+    cxn.close()
+
+def query_database():
+    # Create or Connect to database
+    conn = sqlite3.connect('data/tools.db')
+    # DB Cursor
+    c = conn.cursor()
+    c.execute("SELECT * FROM tools")
+    records = c.fetchall()
+    global count
+    count = 0
+
+    for record in records:
+        if count % 2 ==0:
+            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],	record[1],	record[2],	record[3],	record[4],	record[5],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59]), tags=('evenrow',))
+        else:
+            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],	record[1],	record[2],	record[3],	record[4],	record[5],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59]), tags=('oddrow',))
+        count +=1
+        
 style = ttk.Style()
 style.theme_use('default')
 style.configure("Treeview",
@@ -162,34 +189,14 @@ my_tree.heading("Q", text="Q", anchor=W)
 my_tree.heading("R", text="R", anchor=W)
 
 
-data = [
-    [0,"DR", "","DR",1333,"","X","CD","800-500006-09A","101 W161","CD .0063 2FL","",0.0062992125984252,0.125,0.0325,0.378,'',0,0.8,2,1.5,0.0590551181102362,'',"","",130,0.00146868553749606,'','','',"C","CT00","Union Tool","Circuit Brd.",1,0,1,1,1,1,1,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-    [1,"EM", "EM","",1332,"","X","EM","800-500006-09A","102 W161","CD .0063 2FL","",1.00629921259843,1.125,1.0325,1.378,'',1,1.8,3,2.5,1.05905511811024,'',"","",131,1.0014686855375,'','','',"C","CT01","Union Tool","Circuit Brd.",2,1,2,2,2,2,2,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1],
-    [1,"EM", "EM","",1331,"","X","EM","800-500006-09A","103 W161","CD .0063 2FL","",2.00629921259843,2.125,2.0325,2.378,'',2,2.8,4,3.5,2.05905511811024,'',"","",132,2.0014686855375,'','','',"C","CT02","Union Tool","Circuit Brd.",3,2,3,3,3,3,3,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",2,2,2,2,2,2,2,2,3,2,2,2,2,2,2,2,2,2],
-    [1,"EM", "EM","",1330,"","X","EM","800-500006-09A","104 W161","CD .0063 2FL","",3.00629921259843,3.125,3.0325,3.378,'',3,3.8,5,4.5,3.05905511811024,'',"","",133,3.0014686855375,'','','',"C","CT03","Union Tool","Circuit Brd.",4,3,4,4,4,4,4,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3],
-    [1,"CM", "CM","",1329,"","X","CM","800-500006-09A","105 W161","CD .0063 2FL","",4.00629921259843,4.125,4.0325,4.378,'',4,4.8,6,5.5,4.05905511811024,'',"","",134,4.0014686855375,'','','',"C","CT04","Union Tool","Circuit Brd.",5,4,5,5,5,5,5,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",4,4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4],
-    [1,"SD", "","SD",1328,"","X","SD","800-500006-09A","106 W161","CD .0063 2FL","",5.00629921259843,5.125,5.0325,5.378,'',5,5.8,7,6.5,5.05905511811024,'',"","",135,5.0014686855375,'','','',"C","CT05","Union Tool","Circuit Brd.",6,5,6,6,6,6,6,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",5,5,5,5,5,5,5,5,6,5,5,5,5,5,5,5,5,5],
-    [1,"EM", "EM","",1327,"","X","EM","800-500006-09A","107 W161","CD .0063 2FL","",6.00629921259843,6.125,6.0325,6.378,'',6,6.8,8,7.5,6.05905511811024,'',"","",136,6.0014686855375,'','','',"C","CT06","Union Tool","Circuit Brd.",7,6,7,7,7,7,7,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",6,6,6,6,6,6,6,6,7,6,6,6,6,6,6,6,6,6],
-    [1,"EM", "EM","",1326,"","X","EM","800-500006-09A","108 W161","CD .0063 2FL","",7.00629921259843,7.125,7.0325,7.378,'',7,7.8,9,8.5,7.05905511811024,'',"","",137,7.0014686855375,'','','',"C","CT07","Union Tool","Circuit Brd.",8,7,8,8,8,8,8,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",7,7,7,7,7,7,7,7,8,7,7,7,7,7,7,7,7,7],
-    [1,"SD", "","SD",1325,"","X","SD","800-500006-09A","109 W161","CD .0063 2FL","",8.00629921259842,8.125,8.0325,8.378,'',8,8.8,10,9.5,8.05905511811024,'',"","",138,8.0014686855375,'','','',"C","CT08","Union Tool","Circuit Brd.",9,8,9,9,9,9,9,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",8,8,8,8,8,8,8,8,9,8,8,8,8,8,8,8,8,8],
-    [1,"DR", "","DR",1324,"","X","CD","800-500006-09A","110 W161","CD .0063 2FL","",9.00629921259842,9.125,9.0325,9.378,'',9,9.8,11,10.5,9.05905511811024,'',"","",139,9.0014686855375,'','','',"C","CT09","Union Tool","Circuit Brd.",10,9,10,10,10,10,10,"0.0063 Dia x 0..059 LOC - 2FLT CD x 130 Deg",9,9,9,9,9,9,9,9,10,9,9,9,9,9,9,9,9,9]
 
- ]
 
 my_tree.tag_configure('oddrow', background="white")
 my_tree.tag_configure('evenrow', background="lightblue")
 
 
 
-global count
-count = 0
 
-for record in data:
-    if count % 2 ==0:
-        my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],	record[1],	record[2],	record[3],	record[4],	record[5],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59]), tags=('evenrow',))
-    else:
-        my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],	record[1],	record[2],	record[3],	record[4],	record[5],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59]), tags=('oddrow',))
-    count +=1
 
 data_frame = LabelFrame(root, text="Records")
 data_frame.pack(fill="x", expand="yes", padx=20)
@@ -853,4 +860,7 @@ select_button.grid(row=0, column=4, padx=10, pady=10)
 
 
 my_tree.bind("<ButtonRelease-1>", select_record)
+BOM() #run once!
+query_database()
+
 root.mainloop()
