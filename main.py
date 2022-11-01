@@ -10,6 +10,68 @@ root.geometry('1200x900+50+50')
 
 
 
+def lookup_records():
+	global search_entry, search
+
+	search = Toplevel(root)
+	search.title("Lookup Tool")
+	search.geometry("400x200")
+	
+
+	# Create label frame
+	search_frame = LabelFrame(search, text="Essai Part Number")
+	search_frame.pack(padx=10, pady=10)
+
+	# Add entry box
+	search_entry = Entry(search_frame, font=("Helvetica", 18))
+	search_entry.pack(pady=20, padx=20)
+
+	# Add button
+	search_button = Button(search, text="Search Tools", command=search_records)
+	search_button.pack(padx=20, pady=20)
+
+def search_records():
+        lookup_record = search_entry.get()
+        # close the search box
+        search.destroy()
+        
+        # Clear the Treeview
+        for record in my_tree.get_children():
+            my_tree.delete(record)
+        
+        # Create a database or connect to one that exists
+        conn = sqlite3.connect('data/tools.db')
+
+        # Create a cursor instance
+        c = conn.cursor()
+
+        c.execute("SELECT rowid, * FROM tools WHERE EssaiPartNum like ?", (lookup_record,))
+        records = c.fetchall()
+        
+        # Add our data to the screen
+        global count
+        count = 0
+        
+        #for record in records:
+        #	print(record)
+
+
+        for record in records:
+                if count % 2 ==0:
+                    my_tree.insert(parent='', index='end', iid=count, text='', values=(record[1],	record[2],	record[3],	record[4],	record[0],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59],	record[60]), tags=('evenrow',))
+                else:
+                    my_tree.insert(parent='', index='end', iid=count, text='', values=(record[1],	record[2],	record[3],	record[4],	record[0],	record[6],	record[7],	record[8],	record[9],	record[10],	record[11],	record[12],	record[13],	record[14],	record[15],	record[16],	record[17],	record[18],	record[19],	record[20],	record[21],	record[22],	record[23],	record[24],	record[25],	record[26],	record[27],	record[28],	record[29],	record[30],	record[31],	record[32],	record[33],	record[34],	record[35],	record[36],	record[37],	record[38],	record[39],	record[40],	record[41],	record[42],	record[43],	record[44],	record[45],	record[46],	record[47],	record[48],	record[49],	record[50],	record[51],	record[52],	record[53],	record[54],	record[55],	record[56],	record[57],	record[58],	record[59],	record[60]), tags=('oddrow',))
+                count +=1
+
+
+        # Commit changes
+        conn.commit()
+
+        # Close our connection
+        conn.close()
+
+
+
 def BOM():
     cxn = sqlite3.connect('data/tools.db')
     wb = pd.read_excel('data/BOM.xlsx',sheet_name = 'Tools', keep_default_na=False)
@@ -18,6 +80,9 @@ def BOM():
     cxn.close()
 
 def query_database():
+    # Just in case Clear the treeview (Search Reset)
+    my_tree.delete(*my_tree.get_children())
+    
     # Create or Connect to database
     conn = sqlite3.connect('data/tools.db')
     # DB Cursor
@@ -1109,6 +1174,20 @@ remove_many_button.grid(row=0, column=3, padx=10, pady=10)
 select_button = Button(button_frame, text="Clear Form", command=clear)
 select_button.grid(row=0, column=4, padx=10, pady=10)
 
+# Add Menu
+my_menu = Menu(root)
+root.config(menu=my_menu)
+#Import Menu
+import_menu = Menu(my_menu, tearoff=0)
+my_menu.add_cascade(label="Import", menu=import_menu)
+import_menu.add_command(label="Import from Bom", command=BOM)
+#Search Menu
+search_menu = Menu(my_menu, tearoff=0)
+my_menu.add_cascade(label="Search", menu=search_menu)
+# Drop down menu
+search_menu.add_command(label="Search", command=lookup_records)
+search_menu.add_separator()
+search_menu.add_command(label="Reset", command=query_database)
 
 my_tree.bind("<ButtonRelease-1>", select_record)
 # BOM() #run once!
