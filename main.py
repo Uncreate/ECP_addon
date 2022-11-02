@@ -4,6 +4,7 @@ from tkinter import messagebox
 import sqlite3
 import pandas as pd
 
+
 root = Tk()
 root.title("ECP Addon")
 root.geometry('1200x900+50+50')
@@ -78,6 +79,14 @@ def BOM():
     wb.to_sql(name='tools',con=cxn,if_exists='replace',index=False)
     cxn.commit()
     cxn.close()
+
+def export_bom():
+    conn = sqlite3.connect('data/tools.db')
+    # pd.read_sql('SELECT * FROM tools',conn).to_excel('data/BOM.xlsx', sheet_name= 'Tools',float_format='%.4f',index= FALSE)
+    wb = pd.read_sql('SELECT * FROM tools WHERE Ignore is 0',conn)
+    with pd.ExcelWriter('data/BOM.xlsx', mode='a', if_sheet_exists="replace") as writer:
+        wb.to_excel(writer,sheet_name = 'Tools', index = FALSE)
+    
 
 def query_database():
     # Just in case Clear the treeview (Search Reset)
@@ -264,7 +273,7 @@ my_tree.tag_configure('evenrow', background="lightblue")
 
 
 
-data_frame = LabelFrame(root, text="Records")
+data_frame = LabelFrame(root, text="Tool Information")
 data_frame.pack(fill="x", expand="yes", padx=20)
 
 
@@ -277,7 +286,7 @@ Ignore.focus()
 SoflexRule_label = Label(data_frame, text="Soflex Rule")
 SoflexRule_label.grid(row=1, column=0)
 SoflexRule = ttk.Combobox(data_frame, width=15)
-SoflexRule['values']= ("CM", "DR", "EM", "FM", "KC", "RM", "RT", "SD", "TE", "TM", "")
+SoflexRule['values']= ("BA", "BU", "CM", "DR", "EM", "FM", "KC", "RM", "RT", "SD", "TE", "TM", "")
 SoflexRule.grid(row=1, column=1)
 
 MillRule_label = Label(data_frame, text="Mill Rule")
@@ -1179,8 +1188,11 @@ my_menu = Menu(root)
 root.config(menu=my_menu)
 #Import Menu
 import_menu = Menu(my_menu, tearoff=0)
-my_menu.add_cascade(label="Import", menu=import_menu)
+my_menu.add_cascade(label="Import/Export", menu=import_menu)
+import_menu.add_command(label="Export to BOM", command=export_bom)
+import_menu.add_separator()
 import_menu.add_command(label="Import from Bom", command=BOM)
+
 #Search Menu
 search_menu = Menu(my_menu, tearoff=0)
 my_menu.add_cascade(label="Search", menu=search_menu)
