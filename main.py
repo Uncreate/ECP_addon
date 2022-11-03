@@ -83,10 +83,16 @@ def BOM():
 def export_bom():
     conn = sqlite3.connect('data/tools.db')
     # pd.read_sql('SELECT * FROM tools',conn).to_excel('data/BOM.xlsx', sheet_name= 'Tools',float_format='%.4f',index= FALSE)
-    wb = pd.read_sql('SELECT * FROM tools WHERE Ignore is 0',conn)
+    wb = pd.read_sql('SELECT * FROM tools',conn)
     with pd.ExcelWriter('data/BOM.xlsx', mode='a', if_sheet_exists="replace") as writer:
         wb.to_excel(writer,sheet_name = 'Tools', index = FALSE)
     
+def export_short_bom():
+    conn = sqlite3.connect('data/tools.db')
+    # pd.read_sql('SELECT * FROM tools',conn).to_excel('data/BOM.xlsx', sheet_name= 'Tools',float_format='%.4f',index= FALSE)
+    wb = pd.read_sql('SELECT * FROM tools WHERE Ignore is 0',conn)
+    with pd.ExcelWriter('data/BOM.xlsx', mode='a', if_sheet_exists="replace") as writer:
+        wb.to_excel(writer,sheet_name = 'Tools', index = FALSE)
 
 def query_database():
     # Just in case Clear the treeview (Search Reset)
@@ -1189,7 +1195,8 @@ root.config(menu=my_menu)
 #Import Menu
 import_menu = Menu(my_menu, tearoff=0)
 my_menu.add_cascade(label="Import/Export", menu=import_menu)
-import_menu.add_command(label="Export to BOM", command=export_bom)
+import_menu.add_command(label="Export Full BOM", command=export_bom)
+import_menu.add_command(label="Export Short BOM", command=export_short_bom)
 import_menu.add_separator()
 import_menu.add_command(label="Import from Bom", command=BOM)
 
