@@ -3,6 +3,9 @@ from tkinter import ttk
 from tkinter import messagebox
 import sqlite3
 import pandas as pd
+import datetime
+from shutil import copyfile
+
 
 
 root = Tk()
@@ -81,18 +84,20 @@ def BOM():
     cxn.close()
 
 def export_bom():
+    def backup():
+        x = datetime.datetime.now()
+        bak = x.strftime("%d") + x.strftime("%m") + x.strftime("%y") + x.strftime("%H") + x.strftime("%M") #create the string to append to the file ddmmyyHH:mm
+        source = 'data/BOM.xlsx'
+        destination = 'data/backup/BOM_' + bak + '.xlsx'
+        copyfile(source,destination)
+    backup()
     conn = sqlite3.connect('data/tools.db')
     # pd.read_sql('SELECT * FROM tools',conn).to_excel('data/BOM.xlsx', sheet_name= 'Tools',float_format='%.4f',index= FALSE)
     wb = pd.read_sql('SELECT * FROM tools',conn)
     with pd.ExcelWriter('data/BOM.xlsx', mode='a', if_sheet_exists="replace") as writer:
         wb.to_excel(writer,sheet_name = 'Tools', index = FALSE)
     
-def export_short_bom():
-    conn = sqlite3.connect('data/tools.db')
-    # pd.read_sql('SELECT * FROM tools',conn).to_excel('data/BOM.xlsx', sheet_name= 'Tools',float_format='%.4f',index= FALSE)
-    wb = pd.read_sql('SELECT * FROM tools WHERE Ignore is 0',conn)
-    with pd.ExcelWriter('data/BOM.xlsx', mode='a', if_sheet_exists="replace") as writer:
-        wb.to_excel(writer,sheet_name = 'Tools', index = FALSE)
+
 
 def query_database():
     # Just in case Clear the treeview (Search Reset)
@@ -1195,10 +1200,9 @@ root.config(menu=my_menu)
 #Import Menu
 import_menu = Menu(my_menu, tearoff=0)
 my_menu.add_cascade(label="Import/Export", menu=import_menu)
-import_menu.add_command(label="Export Full BOM", command=export_bom)
-import_menu.add_command(label="Export Short BOM", command=export_short_bom)
+import_menu.add_command(label="Export Full BOM.xlsx", command=export_bom)
 import_menu.add_separator()
-import_menu.add_command(label="Import from Bom", command=BOM)
+import_menu.add_command(label="Import from BOM.xlsx", command=BOM)
 
 #Search Menu
 search_menu = Menu(my_menu, tearoff=0)
